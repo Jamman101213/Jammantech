@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,19 +9,6 @@
     <style>
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --bg: #07060b;
-            --panel: rgba(16, 13, 23, 0.82);
-            --panel-hover: rgba(25, 20, 35, 0.92);
-            --border: rgba(150, 100, 210, 0.18);
-            --purple: #9b5cff;
-            --purple-light: #c9a5ff;
-            --text: #f5f1fa;
-            --muted: #aaa2b4;
         }
 
         html {
@@ -30,783 +16,455 @@
         }
 
         body {
-            min-height: 100vh;
-            overflow-x: hidden;
-
+            margin: 0;
+            background: #0b0b0b;
+            color: #e8e8e8;
             font-family: Arial, Helvetica, sans-serif;
-
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(91, 42, 150, 0.25),
-                    transparent 45%
-                ),
-                var(--bg);
-
-            color: var(--text);
             line-height: 1.6;
         }
 
-        /* =========================================
-           WEATHER BACKGROUND
-        ========================================= */
+        a {
+            color: inherit;
+        }
+
+        /* -----------------------------
+           BACKGROUND
+        ----------------------------- */
 
         #weather {
             position: fixed;
             inset: 0;
-
-            z-index: -1;
-
-            pointer-events: none;
-
             overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
         }
 
         #weather::after {
             content: "";
-
             position: absolute;
             inset: 0;
-
-            background:
-                radial-gradient(
-                    ellipse at center,
-                    transparent 20%,
-                    rgba(0, 0, 0, 0.4) 100%
-                );
+            background: rgba(0, 0, 0, 0.35);
         }
-
-        /* Rain */
 
         .rain-drop {
             position: absolute;
-
-            top: -120px;
+            top: -100px;
 
             width: 1px;
-            height: 65px;
+            height: 55px;
 
-            background:
-                linear-gradient(
-                    to bottom,
-                    transparent,
-                    rgba(190, 210, 255, 0.35)
-                );
+            background: rgba(210, 220, 225, 0.22);
 
-            transform: rotate(12deg);
+            transform: rotate(10deg);
 
-            animation:
-                rain-fall linear infinite;
-
-            opacity: 0.55;
+            animation: rain linear infinite;
         }
 
-        @keyframes rain-fall {
-
+        @keyframes rain {
             from {
                 transform:
                     translate3d(0, -100px, 0)
-                    rotate(12deg);
+                    rotate(10deg);
             }
 
             to {
                 transform:
-                    translate3d(-100px, 110vh, 0)
-                    rotate(12deg);
+                    translate3d(-80px, 110vh, 0)
+                    rotate(10deg);
             }
         }
 
-        /* Leaves */
-
         .leaf {
             position: absolute;
+            top: -40px;
 
-            top: -80px;
+            width: 11px;
+            height: 7px;
 
-            width: 14px;
-            height: 8px;
+            background: #59604e;
 
-            background:
-                rgba(130, 150, 115, 0.28);
+            border-radius: 80% 0 80% 0;
 
-            border-radius:
-                100% 0 100% 0;
+            opacity: 0.35;
 
-            animation:
-                leaf-fall linear infinite;
+            animation: leaf linear infinite;
         }
 
-        @keyframes leaf-fall {
-
+        @keyframes leaf {
             0% {
                 transform:
-                    translate3d(0, -80px, 0)
+                    translate(0, -60px)
                     rotate(20deg);
             }
 
             25% {
                 transform:
-                    translate3d(80px, 25vh, 0)
-                    rotate(120deg);
+                    translate(70px, 25vh)
+                    rotate(110deg);
             }
 
             50% {
                 transform:
-                    translate3d(-60px, 50vh, 0)
-                    rotate(210deg);
+                    translate(-50px, 50vh)
+                    rotate(200deg);
             }
 
             75% {
                 transform:
-                    translate3d(100px, 75vh, 0)
-                    rotate(280deg);
+                    translate(90px, 75vh)
+                    rotate(290deg);
             }
 
             100% {
                 transform:
-                    translate3d(-40px, 115vh, 0)
+                    translate(-30px, 110vh)
                     rotate(360deg);
             }
         }
 
-        /* =========================================
-           SOUND BUTTON
-        ========================================= */
+        /* -----------------------------
+           PAGE
+        ----------------------------- */
+
+        .page {
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            width: min(950px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        /* -----------------------------
+           HEADER
+        ----------------------------- */
+
+        header {
+            min-height: 70vh;
+
+            display: flex;
+            align-items: center;
+
+            border-bottom: 1px solid #222;
+        }
+
+        .hero {
+            padding: 90px 0;
+        }
+
+        .eyebrow {
+            margin-bottom: 16px;
+
+            color: #888;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            margin: 0;
+
+            font-size: clamp(48px, 8vw, 78px);
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: -3px;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 25px 0 0;
+
+            color: #aaa;
+            font-size: 18px;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+        .link {
+            display: inline-block;
+
+            padding: 10px 15px;
+
+            border: 1px solid #333;
+
+            color: #ddd;
+            text-decoration: none;
+
+            font-size: 14px;
+
+            background: #111;
+
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .link:hover {
+            background: #181818;
+            border-color: #555;
+        }
+
+        /* -----------------------------
+           NAV
+        ----------------------------- */
+
+        nav {
+            position: sticky;
+            top: 0;
+
+            z-index: 10;
+
+            border-bottom: 1px solid #222;
+
+            background: rgba(11, 11, 11, 0.94);
+        }
+
+        .nav-inner {
+            width: min(950px, calc(100% - 40px));
+            margin: 0 auto;
+
+            display: flex;
+            gap: 24px;
+
+            padding: 14px 0;
+        }
+
+        nav a {
+            color: #888;
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        /* -----------------------------
+           SECTIONS
+        ----------------------------- */
+
+        main {
+            padding: 80px 0;
+        }
+
+        section {
+            margin-bottom: 100px;
+            scroll-margin-top: 80px;
+        }
+
+        .section-title {
+            margin-bottom: 8px;
+
+            font-size: 30px;
+            line-height: 1.2;
+        }
+
+        .section-text {
+            max-width: 720px;
+
+            color: #aaa;
+            font-size: 16px;
+        }
+
+        /* -----------------------------
+           PROJECTS
+        ----------------------------- */
+
+        .project-list {
+            margin-top: 35px;
+
+            border-top: 1px solid #222;
+        }
+
+        .project {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+
+            gap: 30px;
+
+            padding: 25px 0;
+
+            border-bottom: 1px solid #222;
+        }
+
+        .project-name {
+            font-weight: 700;
+            color: #eee;
+        }
+
+        .project-type {
+            margin-top: 4px;
+
+            color: #777;
+            font-size: 13px;
+        }
+
+        .project-description {
+            color: #aaa;
+        }
+
+        /* -----------------------------
+           QUEST
+        ----------------------------- */
+
+        .quest-items {
+            margin-top: 30px;
+
+            border-top: 1px solid #222;
+        }
+
+        .quest-item {
+            padding: 22px 0;
+
+            border-bottom: 1px solid #222;
+        }
+
+        .quest-item h3 {
+            margin: 0 0 6px;
+
+            font-size: 18px;
+        }
+
+        .quest-item p {
+            margin: 0;
+
+            color: #999;
+        }
+
+        /* -----------------------------
+           SOCIAL
+        ----------------------------- */
+
+        .social-links {
+            margin-top: 25px;
+
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 10px;
+        }
+
+        .social-link {
+            display: inline-block;
+
+            padding: 11px 16px;
+
+            border: 1px solid #333;
+
+            background: #111;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .social-link:hover {
+            background: #181818;
+            border-color: #555;
+        }
+
+        /* -----------------------------
+           SOUND
+        ----------------------------- */
 
         #soundButton {
             position: fixed;
 
-            right: 22px;
-            bottom: 22px;
+            right: 20px;
+            bottom: 20px;
 
             z-index: 100;
 
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
 
-            border-radius: 50%;
+            border: 1px solid #333;
 
-            border:
-                1px solid rgba(180, 130, 240, 0.25);
+            background: #111;
 
-            background:
-                rgba(18, 14, 25, 0.82);
-
-            color:
-                var(--purple-light);
-
-            backdrop-filter:
-                blur(15px);
+            color: #ddd;
 
             cursor: pointer;
 
-            font-size: 19px;
-
-            box-shadow:
-                0 8px 30px rgba(0, 0, 0, 0.35);
-
-            transition:
-                transform 0.2s,
-                background 0.2s;
+            font-size: 17px;
         }
 
         #soundButton:hover {
-            transform: scale(1.08);
-
-            background:
-                rgba(42, 28, 60, 0.9);
+            background: #191919;
         }
 
-        /* =========================================
-           HERO
-        ========================================= */
-
-        header {
-            min-height: 78vh;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            padding: 60px 20px;
-
-            background:
-                linear-gradient(
-                    to bottom,
-                    rgba(5, 4, 8, 0.15),
-                    rgba(5, 4, 8, 0.55)
-                );
-        }
-
-        .hero {
-            max-width: 820px;
-        }
-
-        .logo {
-            display: inline-block;
-
-            padding: 8px 15px;
-
-            border:
-                1px solid rgba(155, 92, 255, 0.25);
-
-            background:
-                rgba(20, 14, 29, 0.65);
-
-            border-radius: 999px;
-
-            color:
-                var(--purple-light);
-
-            font-size: 13px;
-
-            letter-spacing: 2px;
-
-            margin-bottom: 22px;
-
-            backdrop-filter:
-                blur(10px);
-        }
-
-        header h1 {
-            font-size:
-                clamp(48px, 9vw, 90px);
-
-            letter-spacing: -4px;
-
-            line-height: 1;
-        }
-
-        header h1 span {
-            color:
-                var(--purple);
-        }
-
-        header p {
-            margin:
-                25px auto 0;
-
-            max-width: 680px;
-
-            color:
-                var(--muted);
-
-            font-size: 19px;
-        }
-
-        /* =========================================
-           BUTTONS
-        ========================================= */
-
-        .buttons {
-            display: flex;
-
-            justify-content: center;
-
-            gap: 12px;
-
-            margin-top: 30px;
-
-            flex-wrap: wrap;
-        }
-
-        .button {
-            padding:
-                12px 20px;
-
-            border-radius:
-                10px;
-
-            text-decoration:
-                none;
-
-            font-weight:
-                bold;
-
-            transition:
-                0.2s;
-        }
-
-        .primary {
-            background:
-                var(--purple);
-
-            color:
-                white;
-
-            box-shadow:
-                0 8px 25px
-                rgba(130, 65, 220, 0.2);
-        }
-
-        .secondary {
-            background:
-                rgba(15, 12, 21, 0.7);
-
-            color:
-                var(--purple-light);
-
-            border:
-                1px solid var(--border);
-
-            backdrop-filter:
-                blur(10px);
-        }
-
-        .button:hover {
-            transform:
-                translateY(-2px);
-
-            filter:
-                brightness(1.12);
-        }
-
-        /* =========================================
-           NAVIGATION
-        ========================================= */
-
-        nav {
-            position: sticky;
-
-            top: 0;
-
-            z-index: 20;
-
-            display: flex;
-
-            justify-content: center;
-
-            gap: 28px;
-
-            padding:
-                17px 20px;
-
-            background:
-                rgba(7, 6, 11, 0.72);
-
-            backdrop-filter:
-                blur(18px);
-
-            border-bottom:
-                1px solid var(--border);
-        }
-
-        nav a {
-            color:
-                #aaa0b5;
-
-            text-decoration:
-                none;
-
-            font-size:
-                14px;
-
-            font-weight:
-                bold;
-
-            transition:
-                0.2s;
-        }
-
-        nav a:hover {
-            color:
-                white;
-        }
-
-        /* =========================================
-           MAIN
-        ========================================= */
-
-        main {
-            max-width:
-                1100px;
-
-            margin:
-                auto;
-
-            padding:
-                80px 20px;
-        }
-
-        section {
-            margin-bottom:
-                110px;
-
-            scroll-margin-top:
-                90px;
-        }
-
-        .section-label {
-            color:
-                var(--purple);
-
-            text-transform:
-                uppercase;
-
-            letter-spacing:
-                2px;
-
-            font-size:
-                12px;
-
-            font-weight:
-                bold;
-
-            margin-bottom:
-                8px;
-        }
-
-        h2 {
-            font-size:
-                38px;
-
-            letter-spacing:
-                -1px;
-
-            margin-bottom:
-                18px;
-        }
-
-        .description {
-            color:
-                var(--muted);
-
-            max-width:
-                760px;
-
-            font-size:
-                17px;
-        }
-
-        /* =========================================
-           CARDS
-        ========================================= */
-
-        .grid {
-            display:
-                grid;
-
-            grid-template-columns:
-                repeat(
-                    auto-fit,
-                    minmax(260px, 1fr)
-                );
-
-            gap:
-                18px;
-
-            margin-top:
-                30px;
-        }
-
-        .card {
-            padding:
-                28px;
-
-            border-radius:
-                18px;
-
-            background:
-                var(--panel);
-
-            border:
-                1px solid var(--border);
-
-            backdrop-filter:
-                blur(14px);
-
-            transition:
-                transform 0.25s,
-                border-color 0.25s,
-                background 0.25s;
-        }
-
-        .card:hover {
-            transform:
-                translateY(-5px);
-
-            background:
-                var(--panel-hover);
-
-            border-color:
-                rgba(155, 92, 255, 0.42);
-        }
-
-        .icon {
-            width:
-                45px;
-
-            height:
-                45px;
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                center;
-
-            border-radius:
-                12px;
-
-            background:
-                rgba(91, 48, 140, 0.3);
-
-            color:
-                var(--purple-light);
-
-            font-size:
-                20px;
-
-            margin-bottom:
-                20px;
-        }
-
-        .card h3 {
-            font-size:
-                21px;
-
-            margin-bottom:
-                9px;
-        }
-
-        .card p {
-            color:
-                var(--muted);
-
-            font-size:
-                15px;
-        }
-
-        .tag {
-            display:
-                inline-block;
-
-            margin-top:
-                18px;
-
-            padding:
-                5px 9px;
-
-            background:
-                rgba(74, 40, 110, 0.3);
-
-            color:
-                var(--purple-light);
-
-            border-radius:
-                7px;
-
-            font-size:
-                12px;
-        }
-
-        /* =========================================
-           QUEST MODDING
-        ========================================= */
-
-        .quest-list {
-            margin-top:
-                25px;
-
-            display:
-                grid;
-
-            gap:
-                12px;
-        }
-
-        .quest-item {
-            padding:
-                18px 20px;
-
-            border-radius:
-                12px;
-
-            background:
-                rgba(12, 10, 17, 0.72);
-
-            border:
-                1px solid var(--border);
-
-            backdrop-filter:
-                blur(12px);
-
-            transition:
-                0.2s;
-        }
-
-        .quest-item:hover {
-            border-color:
-                rgba(155, 92, 255, 0.35);
-
-            transform:
-                translateX(4px);
-        }
-
-        .quest-item strong {
-            color:
-                var(--purple-light);
-        }
-
-        .quest-item span {
-            color:
-                var(--muted);
-        }
-
-        /* =========================================
-           DISCORD
-        ========================================= */
-
-        .discord {
-            padding:
-                40px;
-
-            border-radius:
-                20px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(112, 58, 190, 0.2),
-                    rgba(18, 16, 26, 0.7)
-                );
-
-            border:
-                1px solid
-                rgba(155, 92, 255, 0.25);
-
-            backdrop-filter:
-                blur(15px);
-        }
-
-        .discord h3 {
-            font-size:
-                30px;
-
-            margin-bottom:
-                10px;
-        }
-
-        .discord p {
-            color:
-                var(--muted);
-
-            max-width:
-                700px;
-        }
-
-        .invite {
-            display:
-                inline-block;
-
-            margin-top:
-                22px;
-
-            color:
-                var(--purple-light);
-
-            font-family:
-                monospace;
-
-            font-size:
-                15px;
-        }
-
-        /* =========================================
+        /* -----------------------------
            FOOTER
-        ========================================= */
+        ----------------------------- */
 
         footer {
-            text-align:
-                center;
+            border-top: 1px solid #222;
 
-            padding:
-                45px 20px;
+            padding: 35px 0 50px;
 
-            color:
-                #706778;
+            color: #666;
 
-            border-top:
-                1px solid var(--border);
-
-            background:
-                rgba(5, 4, 8, 0.45);
+            font-size: 13px;
         }
 
-        footer strong {
-            color:
-                #a998b8;
+        footer a {
+            color: #888;
+            text-decoration: none;
         }
 
-        /* =========================================
+        footer a:hover {
+            color: #fff;
+        }
+
+        /* -----------------------------
            MOBILE
-        ========================================= */
+        ----------------------------- */
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
 
-            nav {
-                gap:
-                    16px;
-
-                overflow-x:
-                    auto;
-
-                justify-content:
-                    flex-start;
+            .container,
+            .nav-inner {
+                width: min(100% - 30px, 950px);
             }
 
             header {
-                min-height:
-                    70vh;
+                min-height: 65vh;
             }
 
-            header h1 {
-                letter-spacing:
-                    -2px;
+            .hero {
+                padding: 70px 0;
             }
 
-            .discord {
-                padding:
-                    28px;
+            h1 {
+                letter-spacing: -2px;
             }
 
-            main {
-                padding-top:
-                    55px;
+            .nav-inner {
+                gap: 15px;
+                overflow-x: auto;
+            }
+
+            .project {
+                grid-template-columns: 1fr;
+                gap: 8px;
             }
         }
 
-        /* =========================================
-           REDUCED MOTION
-        ========================================= */
-
         @media (prefers-reduced-motion: reduce) {
-
             html {
-                scroll-behavior:
-                    auto;
+                scroll-behavior: auto;
             }
 
             .rain-drop,
             .leaf {
-                animation:
-                    none;
-                display:
-                    none;
-            }
-
-            .card,
-            .quest-item,
-            .button,
-            #soundButton {
-                transition:
-                    none;
+                animation: none;
+                display: none;
             }
         }
     </style>
@@ -814,590 +472,405 @@
 
 <body>
 
-    <!-- =========================================
-         ANIMATED RAIN + LEAVES
-    ========================================== -->
-
+    <!-- Rain and leaves -->
     <div id="weather"></div>
 
-
-    <!-- =========================================
-         CALM RAIN AUDIO
-    ========================================== -->
-
-    <audio
-        id="rainAudio"
-        loop
-        preload="auto"
-    >
-        <source
-            src="calm_rain.mp3"
-            type="audio/mpeg"
-        >
+    <!-- Rain ambience -->
+    <audio id="rainAudio" loop preload="auto">
+        <source src="calm_rain.mp3" type="audio/mpeg">
     </audio>
 
     <button
         id="soundButton"
-        title="Toggle rain ambience"
+        type="button"
         aria-label="Toggle rain ambience"
+        title="Toggle rain ambience"
     >
         🔇
     </button>
 
+    <div class="page">
 
-    <!-- =========================================
-         HERO
-    ========================================== -->
+        <!-- HEADER -->
 
-    <header>
+        <header>
+            <div class="container">
+                <div class="hero">
 
-        <div class="hero">
-
-            <div class="logo">
-                JAMMANTECH
-            </div>
-
-            <h1>
-                Hey, I'm
-                <span>Jammantech.</span>
-            </h1>
-
-            <p>
-                I make things with technology, experiment with software,
-                mess around with VR and Quest modding, and build projects
-                that I think are cool.
-            </p>
-
-            <div class="buttons">
-
-                <a
-                    class="button primary"
-                    href="#projects"
-                >
-                    My Projects
-                </a>
-
-                <a
-                    class="button secondary"
-                    href="https://discord.gg/eYa3myAF7G"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    💬 My Discord
-                </a>
-
-                <a
-                    class="button secondary"
-                    href="https://www.tiktok.com/@jammantech"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    🎵 My TikTok
-                </a>
-
-            </div>
-
-        </div>
-
-    </header>
-
-
-    <!-- =========================================
-         NAVIGATION
-    ========================================== -->
-
-    <nav>
-
-        <a href="#about">
-            About Me
-        </a>
-
-        <a href="#projects">
-            Projects
-        </a>
-
-        <a href="#quest">
-            Quest Modding
-        </a>
-
-        <a href="#discord">
-            Discord
-        </a>
-
-        <a href="#interests">
-            Interests
-        </a>
-
-    </nav>
-
-
-    <main>
-
-        <!-- =========================================
-             ABOUT
-        ========================================== -->
-
-        <section id="about">
-
-            <div class="section-label">
-                About Me
-            </div>
-
-            <h2>
-                So, what do I do?
-            </h2>
-
-            <p class="description">
-                I'm Jammantech. I enjoy building things, experimenting
-                with technology, learning how software works, and turning
-                random ideas into actual projects.
-            </p>
-
-            <br>
-
-            <p class="description">
-                A lot of what I do revolves around programming, web
-                development, VR, Quest modding, Android tooling,
-                customization, and seeing what I can make.
-            </p>
-
-        </section>
-
-
-        <!-- =========================================
-             PROJECTS
-        ========================================== -->
-
-        <section id="projects">
-
-            <div class="section-label">
-                Projects
-            </div>
-
-            <h2>
-                Stuff I've built
-            </h2>
-
-            <p class="description">
-                I work on a variety of projects rather than sticking
-                to one particular type of technology.
-            </p>
-
-            <div class="grid">
-
-                <div class="card">
-
-                    <div class="icon">
-                        💻
+                    <div class="eyebrow">
+                        Personal site
                     </div>
 
-                    <h3>
-                        Web Projects
-                    </h3>
+                    <h1>
+                        Jammantech
+                    </h1>
 
                     <p>
-                        Websites, interfaces, interactive pages,
-                        JavaScript experiments, and projects using
-                        modern web technologies.
+                        I like messing with technology, building things,
+                        experimenting with software, and figuring out
+                        how stuff works.
                     </p>
 
-                    <span class="tag">
-                        HTML / CSS / JS
-                    </span>
+                    <div class="links">
 
-                </div>
+                        <a
+                            class="link"
+                            href="https://discord.gg/eYa3myAF7G"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Discord
+                        </a>
 
+                        <a
+                            class="link"
+                            href="https://www.tiktok.com/@jammantech"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            TikTok
+                        </a>
 
-                <div class="card">
-
-                    <div class="icon">
-                        ⚙️
                     </div>
 
-                    <h3>
-                        Software & Tools
-                    </h3>
-
-                    <p>
-                        Custom utilities, experiments, automation,
-                        development tools, and other software projects.
-                    </p>
-
-                    <span class="tag">
-                        Development
-                    </span>
-
                 </div>
+            </div>
+        </header>
 
+        <!-- NAV -->
 
-                <div class="card">
+        <nav>
+            <div class="nav-inner">
 
-                    <div class="icon">
-                        🧪
-                    </div>
+                <a href="#about">
+                    About
+                </a>
 
-                    <h3>
-                        Random Experiments
-                    </h3>
+                <a href="#projects">
+                    Projects
+                </a>
 
-                    <p>
-                        Interesting ideas that start as experiments
-                        and sometimes turn into something much bigger.
-                    </p>
+                <a href="#quest">
+                    Quest Modding
+                </a>
 
-                    <span class="tag">
-                        Experiments
-                    </span>
+                <a href="#discord">
+                    Discord
+                </a>
 
-                </div>
+                <a href="#interests">
+                    Interests
+                </a>
 
             </div>
+        </nav>
 
-        </section>
+        <main>
 
+            <!-- ABOUT -->
 
-        <!-- =========================================
-             QUEST MODDING
-        ========================================== -->
+            <section id="about">
 
-        <section id="quest">
+                <h2 class="section-title">
+                    About me
+                </h2>
 
-            <div class="section-label">
-                VR & Android
-            </div>
-
-            <h2>
-                Quest Modding
-            </h2>
-
-            <p class="description">
-                I'm interested in Meta Quest modding and the Android
-                side of standalone VR. I enjoy experimenting with
-                customization, tools, applications, and different
-                ways of modifying the Quest experience.
-            </p>
-
-
-            <div class="quest-list">
-
-                <div class="quest-item">
-
-                    <strong>
-                        🥽 Quest Modding
-                    </strong>
-
-                    <br>
-
-                    <span>
-                        Exploring mods, customization, and the Quest
-                        modding ecosystem.
-                    </span>
-
-                </div>
-
-
-                <div class="quest-item">
-
-                    <strong>
-                        📱 ADB & Android
-                    </strong>
-
-                    <br>
-
-                    <span>
-                        Working with ADB, Android files, applications,
-                        and device-side development workflows.
-                    </span>
-
-                </div>
-
-
-                <div class="quest-item">
-
-                    <strong>
-                        🔧 VR Experiments
-                    </strong>
-
-                    <br>
-
-                    <span>
-                        Testing ideas and exploring what can be
-                        customized and built for standalone VR.
-                    </span>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================================
-             DISCORD
-        ========================================== -->
-
-        <section id="discord">
-
-            <div class="section-label">
-                Community
-            </div>
-
-            <div class="discord">
-
-                <h3>
-                    My Discord
-                </h3>
-
-                <p>
-                    I have a Discord community where I share projects,
-                    talk about Quest modding, discuss technology,
-                    and hang out with people interested in the same
-                    kinds of things.
+                <p class="section-text">
+                    I'm Jammantech. I enjoy programming, web development,
+                    VR, Quest modding, Android tooling, and generally
+                    messing around with technology.
                 </p>
 
-                <div class="invite">
-                    discord.gg/eYa3myAF7G
+                <p class="section-text">
+                    A lot of my projects start as random ideas.
+                    Sometimes they stay experiments, and sometimes
+                    they turn into something useful.
+                </p>
+
+            </section>
+
+
+            <!-- PROJECTS -->
+
+            <section id="projects">
+
+                <h2 class="section-title">
+                    Projects
+                </h2>
+
+                <p class="section-text">
+                    Some of the kinds of things I work on.
+                </p>
+
+                <div class="project-list">
+
+                    <div class="project">
+
+                        <div>
+                            <div class="project-name">
+                                Web development
+                            </div>
+
+                            <div class="project-type">
+                                HTML / CSS / JavaScript
+                            </div>
+                        </div>
+
+                        <div class="project-description">
+                            Websites, interfaces, JavaScript experiments,
+                            and small web projects.
+                        </div>
+
+                    </div>
+
+
+                    <div class="project">
+
+                        <div>
+                            <div class="project-name">
+                                Software & tools
+                            </div>
+
+                            <div class="project-type">
+                                Development
+                            </div>
+                        </div>
+
+                        <div class="project-description">
+                            Utilities, experiments, scripts, automation,
+                            and other things I build to try out ideas.
+                        </div>
+
+                    </div>
+
+
+                    <div class="project">
+
+                        <div>
+                            <div class="project-name">
+                                Tech experiments
+                            </div>
+
+                            <div class="project-type">
+                                Various
+                            </div>
+                        </div>
+
+                        <div class="project-description">
+                            Random projects involving hardware,
+                            software, customization, and figuring
+                            out how things work.
+                        </div>
+
+                    </div>
+
                 </div>
 
+            </section>
 
-                <div
-                    class="buttons"
-                    style="justify-content:flex-start;"
-                >
+
+            <!-- QUEST -->
+
+            <section id="quest">
+
+                <h2 class="section-title">
+                    Quest modding
+                </h2>
+
+                <p class="section-text">
+                    I'm interested in Meta Quest modding and the
+                    Android side of standalone VR.
+                </p>
+
+                <div class="quest-items">
+
+                    <div class="quest-item">
+
+                        <h3>
+                            Quest modding
+                        </h3>
+
+                        <p>
+                            Exploring mods, customization, and the
+                            Quest modding community.
+                        </p>
+
+                    </div>
+
+
+                    <div class="quest-item">
+
+                        <h3>
+                            ADB & Android
+                        </h3>
+
+                        <p>
+                            Working with ADB, Android files,
+                            applications, and device tools.
+                        </p>
+
+                    </div>
+
+
+                    <div class="quest-item">
+
+                        <h3>
+                            VR experiments
+                        </h3>
+
+                        <p>
+                            Trying different ideas and seeing what
+                            can be changed or built on standalone VR.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- DISCORD -->
+
+            <section id="discord">
+
+                <h2 class="section-title">
+                    Discord
+                </h2>
+
+                <p class="section-text">
+                    I have a Discord community where I can share
+                    projects, talk about Quest modding, discuss
+                    technology, and hang out.
+                </p>
+
+                <div class="social-links">
 
                     <a
-                        class="button primary"
+                        class="social-link"
                         href="https://discord.gg/eYa3myAF7G"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        💬 Join My Discord
-                    </a>
-
-
-                    <a
-                        class="button secondary"
-                        href="https://www.tiktok.com/@jammantech"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        🎵 Follow My TikTok
+                        Join my Discord
                     </a>
 
                 </div>
 
-            </div>
+                <p
+                    style="
+                        margin-top: 18px;
+                        color: #666;
+                        font-family: monospace;
+                    "
+                >
+                    discord.gg/eYa3myAF7G
+                </p>
 
-        </section>
-
-
-        <!-- =========================================
-             INTERESTS
-        ========================================== -->
-
-        <section id="interests">
-
-            <div class="section-label">
-                Interests
-            </div>
-
-            <h2>
-                Things I'm into
-            </h2>
+            </section>
 
 
-            <div class="grid">
+            <!-- INTERESTS -->
 
-                <div class="card">
+            <section id="interests">
 
-                    <div class="icon">
-                        💻
-                    </div>
+                <h2 class="section-title">
+                    Things I'm into
+                </h2>
 
-                    <h3>
-                        Programming
-                    </h3>
+                <p class="section-text">
+                    Programming, web development, VR, Quest modding,
+                    Android, software experimentation, customization,
+                    and learning how technology works.
+                </p>
 
-                    <p>
-                        Creating software, websites, tools,
-                        experiments, and interactive projects.
-                    </p>
+            </section>
 
-                </div>
-
-
-                <div class="card">
-
-                    <div class="icon">
-                        🥽
-                    </div>
-
-                    <h3>
-                        VR
-                    </h3>
-
-                    <p>
-                        Meta Quest, standalone VR, customization,
-                        modding, and experimenting with VR technology.
-                    </p>
-
-                </div>
+        </main>
 
 
-                <div class="card">
+        <!-- FOOTER -->
 
-                    <div class="icon">
-                        🔧
-                    </div>
+        <footer>
 
-                    <h3>
-                        Modding
-                    </h3>
+            <div class="container">
 
-                    <p>
-                        Modifying software and devices, exploring
-                        how things work, and creating custom setups.
-                    </p>
+                <strong>
+                    Jammantech
+                </strong>
 
-                </div>
+                <br><br>
 
+                <a
+                    href="https://discord.gg/eYa3myAF7G"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Discord
+                </a>
 
-                <div class="card">
+                &nbsp;·&nbsp;
 
-                    <div class="icon">
-                        🌐
-                    </div>
+                <a
+                    href="https://www.tiktok.com/@jammantech"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    TikTok
+                </a>
 
-                    <h3>
-                        Online Community
-                    </h3>
+                <br><br>
 
-                    <p>
-                        Sharing projects, meeting other tech
-                        enthusiasts, and building a community around
-                        the things I create.
-                    </p>
-
-                </div>
+                © 2026 Jammantech
 
             </div>
 
-        </section>
+        </footer>
 
-    </main>
+    </div>
 
-
-    <!-- =========================================
-         FOOTER
-    ========================================== -->
-
-    <footer>
-
-        <strong>
-            Jammantech
-        </strong>
-
-        <br>
-
-        Programming • VR • Modding • Technology
-
-        <br><br>
-
-        <a
-            href="https://discord.gg/eYa3myAF7G"
-            target="_blank"
-            rel="noopener noreferrer"
-            style="
-                color: #a98bd0;
-                text-decoration: none;
-                margin-right: 12px;
-            "
-        >
-            Discord
-        </a>
-
-        <a
-            href="https://www.tiktok.com/@jammantech"
-            target="_blank"
-            rel="noopener noreferrer"
-            style="
-                color: #a98bd0;
-                text-decoration: none;
-            "
-        >
-            TikTok
-        </a>
-
-        <br><br>
-
-        © 2026 Jammantech
-
-    </footer>
-
-
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
 
     <script>
-
-        /* =========================================
+        /* -----------------------------
            CREATE RAIN
-        ========================================== */
+        ----------------------------- */
 
-        const weather =
-            document.getElementById("weather");
+        const weather = document.getElementById("weather");
 
-        const rainCount = 140;
+        for (let i = 0; i < 120; i++) {
 
-        for (
-            let i = 0;
-            i < rainCount;
-            i++
-        ) {
+            const drop = document.createElement("div");
 
-            const drop =
-                document.createElement("div");
-
-            drop.className =
-                "rain-drop";
+            drop.className = "rain-drop";
 
             drop.style.left =
                 Math.random() * 110 + "vw";
 
-            drop.style.animationDuration =
-                (0.65 + Math.random() * 0.8) + "s";
-
-            drop.style.animationDelay =
-                (-Math.random() * 2) + "s";
+            drop.style.height =
+                (30 + Math.random() * 45) + "px";
 
             drop.style.opacity =
-                0.15 + Math.random() * 0.4;
+                0.1 + Math.random() * 0.3;
 
-            drop.style.height =
-                (35 + Math.random() * 45) + "px";
+            drop.style.animationDuration =
+                (0.7 + Math.random() * 0.8) + "s";
+
+            drop.style.animationDelay =
+                (-Math.random() * 3) + "s";
 
             weather.appendChild(drop);
         }
 
 
-        /* =========================================
+        /* -----------------------------
            CREATE LEAVES
-        ========================================== */
+        ----------------------------- */
 
-        const leafCount = 14;
+        for (let i = 0; i < 12; i++) {
 
-        for (
-            let i = 0;
-            i < leafCount;
-            i++
-        ) {
+            const leaf = document.createElement("div");
 
-            const leaf =
-                document.createElement("div");
-
-            leaf.className =
-                "leaf";
+            leaf.className = "leaf";
 
             leaf.style.left =
                 Math.random() * 100 + "vw";
@@ -1408,22 +881,13 @@
             leaf.style.animationDelay =
                 (-Math.random() * 15) + "s";
 
-            leaf.style.opacity =
-                0.15 + Math.random() * 0.3;
-
-            const size =
-                0.65 + Math.random() * 0.8;
-
-            leaf.style.transform =
-                `scale(${size})`;
-
             weather.appendChild(leaf);
         }
 
 
-        /* =========================================
+        /* -----------------------------
            AUDIO
-        ========================================== */
+        ----------------------------- */
 
         const audio =
             document.getElementById("rainAudio");
@@ -1431,101 +895,87 @@
         const soundButton =
             document.getElementById("soundButton");
 
-        let soundEnabled = false;
+        let audioEnabled = false;
 
 
-        function startRain() {
+        function startAudio() {
 
-            audio.volume = 0.28;
+            audio.volume = 0.25;
 
             audio.play()
                 .then(() => {
 
-                    soundEnabled = true;
+                    audioEnabled = true;
 
-                    soundButton.textContent =
-                        "🔊";
+                    soundButton.textContent = "🔊";
 
                 })
                 .catch(() => {
 
-                    soundEnabled = false;
-
-                    soundButton.textContent =
-                        "🔇";
+                    soundButton.textContent = "🔇";
 
                 });
         }
 
 
-        soundButton.addEventListener(
-            "click",
-            () => {
+        soundButton.addEventListener("click", () => {
 
-                if (audio.paused) {
+            if (audio.paused) {
 
-                    startRain();
+                startAudio();
 
-                } else {
+            } else {
 
-                    audio.pause();
+                audio.pause();
 
-                    soundEnabled = false;
+                audioEnabled = false;
 
-                    soundButton.textContent =
-                        "🔇";
-                }
+                soundButton.textContent = "🔇";
             }
-        );
+
+        });
 
 
-        /*
-            Browsers normally block audio autoplay.
+        /* Start after first interaction */
 
-            The first interaction with the page starts
-            the rain ambience automatically.
-        */
+        function firstInteraction() {
 
-        const enableAudio = () => {
-
-            if (!soundEnabled) {
-                startRain();
+            if (!audioEnabled) {
+                startAudio();
             }
 
             window.removeEventListener(
                 "click",
-                enableAudio
+                firstInteraction
             );
 
             window.removeEventListener(
                 "keydown",
-                enableAudio
+                firstInteraction
             );
 
             window.removeEventListener(
                 "touchstart",
-                enableAudio
+                firstInteraction
             );
-        };
+        }
 
 
         window.addEventListener(
             "click",
-            enableAudio
+            firstInteraction
         );
 
         window.addEventListener(
             "keydown",
-            enableAudio
+            firstInteraction
         );
 
         window.addEventListener(
             "touchstart",
-            enableAudio
+            firstInteraction
         );
-
     </script>
 
 </body>
 </html>
-```
