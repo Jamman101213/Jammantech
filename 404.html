@@ -1,8 +1,12 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Jammantech</title>
 
@@ -27,9 +31,9 @@
             color: inherit;
         }
 
-        /* -----------------------------
-           BACKGROUND
-        ----------------------------- */
+        /* =========================================
+           WEATHER BACKGROUND
+        ========================================= */
 
         #weather {
             position: fixed;
@@ -122,9 +126,9 @@
             }
         }
 
-        /* -----------------------------
+        /* =========================================
            PAGE
-        ----------------------------- */
+        ========================================= */
 
         .page {
             position: relative;
@@ -136,9 +140,9 @@
             margin: 0 auto;
         }
 
-        /* -----------------------------
+        /* =========================================
            HEADER
-        ----------------------------- */
+        ========================================= */
 
         header {
             min-height: 70vh;
@@ -157,8 +161,11 @@
             margin-bottom: 16px;
 
             color: #888;
+
             font-size: 13px;
+
             text-transform: uppercase;
+
             letter-spacing: 2px;
         }
 
@@ -166,22 +173,29 @@
             margin: 0;
 
             font-size: clamp(48px, 8vw, 78px);
+
             line-height: 1;
+
             font-weight: 700;
+
             letter-spacing: -3px;
         }
 
         .hero p {
             max-width: 650px;
+
             margin: 25px 0 0;
 
             color: #aaa;
+
             font-size: 18px;
         }
 
         .links {
             display: flex;
+
             flex-wrap: wrap;
+
             gap: 10px;
 
             margin-top: 30px;
@@ -195,13 +209,16 @@
             border: 1px solid #333;
 
             color: #ddd;
+
             text-decoration: none;
 
             font-size: 14px;
 
             background: #111;
 
-            transition: background 0.15s, border-color 0.15s;
+            transition:
+                background 0.15s,
+                border-color 0.15s;
         }
 
         .link:hover {
@@ -209,12 +226,13 @@
             border-color: #555;
         }
 
-        /* -----------------------------
-           NAV
-        ----------------------------- */
+        /* =========================================
+           NAVIGATION
+        ========================================= */
 
         nav {
             position: sticky;
+
             top: 0;
 
             z-index: 10;
@@ -226,9 +244,11 @@
 
         .nav-inner {
             width: min(950px, calc(100% - 40px));
+
             margin: 0 auto;
 
             display: flex;
+
             gap: 24px;
 
             padding: 14px 0;
@@ -236,6 +256,7 @@
 
         nav a {
             color: #888;
+
             text-decoration: none;
 
             font-size: 14px;
@@ -245,9 +266,9 @@
             color: #fff;
         }
 
-        /* -----------------------------
-           SECTIONS
-        ----------------------------- */
+        /* =========================================
+           MAIN SECTIONS
+        ========================================= */
 
         main {
             padding: 80px 0;
@@ -255,6 +276,7 @@
 
         section {
             margin-bottom: 100px;
+
             scroll-margin-top: 80px;
         }
 
@@ -262,6 +284,7 @@
             margin-bottom: 8px;
 
             font-size: 30px;
+
             line-height: 1.2;
         }
 
@@ -269,12 +292,13 @@
             max-width: 720px;
 
             color: #aaa;
+
             font-size: 16px;
         }
 
-        /* -----------------------------
+        /* =========================================
            PROJECTS
-        ----------------------------- */
+        ========================================= */
 
         .project-list {
             margin-top: 35px;
@@ -284,6 +308,7 @@
 
         .project {
             display: grid;
+
             grid-template-columns: 180px 1fr;
 
             gap: 30px;
@@ -294,14 +319,16 @@
         }
 
         .project-name {
-            font-weight: 700;
             color: #eee;
+
+            font-weight: 700;
         }
 
         .project-type {
             margin-top: 4px;
 
             color: #777;
+
             font-size: 13px;
         }
 
@@ -309,9 +336,9 @@
             color: #aaa;
         }
 
-        /* -----------------------------
-           QUEST
-        ----------------------------- */
+        /* =========================================
+           QUEST MODDING
+        ========================================= */
 
         .quest-items {
             margin-top: 30px;
@@ -337,41 +364,119 @@
             color: #999;
         }
 
-        /* -----------------------------
-           SOCIAL
-        ----------------------------- */
+        /* =========================================
+           SOCIAL EMBEDS
+        ========================================= */
 
-        .social-links {
-            margin-top: 25px;
+        .embed-grid {
+            display: grid;
 
-            display: flex;
-            flex-wrap: wrap;
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(280px, 1fr)
+                );
 
-            gap: 10px;
+            gap: 14px;
+
+            margin-top: 30px;
         }
 
-        .social-link {
-            display: inline-block;
+        .social-embed {
+            display: flex;
 
-            padding: 11px 16px;
+            gap: 18px;
 
-            border: 1px solid #333;
+            padding: 22px;
 
             background: #111;
 
+            border: 1px solid #2a2a2a;
+
             text-decoration: none;
 
+            color: inherit;
+
+            transition:
+                background 0.15s,
+                border-color 0.15s,
+                transform 0.15s;
+        }
+
+        .social-embed:hover {
+            background: #171717;
+
+            border-color: #444;
+
+            transform: translateY(-2px);
+        }
+
+        .embed-icon {
+            width: 44px;
+            height: 44px;
+
+            flex: 0 0 44px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #191919;
+
+            border: 1px solid #303030;
+
+            font-size: 20px;
+        }
+
+        .embed-content {
+            min-width: 0;
+        }
+
+        .embed-label {
+            color: #666;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            letter-spacing: 1.5px;
+        }
+
+        .embed-title {
+            margin-top: 2px;
+
+            font-size: 19px;
+
+            font-weight: bold;
+        }
+
+        .embed-description {
+            margin-top: 5px;
+
+            color: #999;
+
             font-size: 14px;
+
+            line-height: 1.5;
         }
 
-        .social-link:hover {
-            background: #181818;
-            border-color: #555;
+        .embed-link {
+            margin-top: 12px;
+
+            color: #777;
+
+            font-family: monospace;
+
+            font-size: 12px;
+
+            overflow-wrap: anywhere;
         }
 
-        /* -----------------------------
+        /* =========================================
            SOUND
-        ----------------------------- */
+        ========================================= */
 
         #soundButton {
             position: fixed;
@@ -399,9 +504,9 @@
             background: #191919;
         }
 
-        /* -----------------------------
+        /* =========================================
            FOOTER
-        ----------------------------- */
+        ========================================= */
 
         footer {
             border-top: 1px solid #222;
@@ -415,6 +520,7 @@
 
         footer a {
             color: #888;
+
             text-decoration: none;
         }
 
@@ -422,9 +528,9 @@
             color: #fff;
         }
 
-        /* -----------------------------
+        /* =========================================
            MOBILE
-        ----------------------------- */
+        ========================================= */
 
         @media (max-width: 700px) {
 
@@ -447,16 +553,27 @@
 
             .nav-inner {
                 gap: 15px;
+
                 overflow-x: auto;
             }
 
             .project {
                 grid-template-columns: 1fr;
+
                 gap: 8px;
+            }
+
+            .social-embed {
+                padding: 18px;
             }
         }
 
+        /* =========================================
+           REDUCED MOTION
+        ========================================= */
+
         @media (prefers-reduced-motion: reduce) {
+
             html {
                 scroll-behavior: auto;
             }
@@ -464,7 +581,14 @@
             .rain-drop,
             .leaf {
                 animation: none;
+
                 display: none;
+            }
+
+            .social-embed,
+            .link,
+            #soundButton {
+                transition: none;
             }
         }
     </style>
@@ -472,13 +596,28 @@
 
 <body>
 
-    <!-- Rain and leaves -->
+    <!-- =========================================
+         RAIN + LEAVES
+    ========================================== -->
+
     <div id="weather"></div>
 
-    <!-- Rain ambience -->
-    <audio id="rainAudio" loop preload="auto">
-        <source src="calm_rain.mp3" type="audio/mpeg">
+
+    <!-- =========================================
+         AUDIO
+    ========================================== -->
+
+    <audio
+        id="rainAudio"
+        loop
+        preload="auto"
+    >
+        <source
+            src="calm_rain.mp3"
+            type="audio/mpeg"
+        >
     </audio>
+
 
     <button
         id="soundButton"
@@ -489,12 +628,17 @@
         🔇
     </button>
 
+
     <div class="page">
 
-        <!-- HEADER -->
+        <!-- =========================================
+             HERO
+        ========================================== -->
 
         <header>
+
             <div class="container">
+
                 <div class="hero">
 
                     <div class="eyebrow">
@@ -510,6 +654,7 @@
                         experimenting with software, and figuring out
                         how stuff works.
                     </p>
+
 
                     <div class="links">
 
@@ -534,12 +679,18 @@
                     </div>
 
                 </div>
+
             </div>
+
         </header>
 
-        <!-- NAV -->
+
+        <!-- =========================================
+             NAVIGATION
+        ========================================== -->
 
         <nav>
+
             <div class="nav-inner">
 
                 <a href="#about">
@@ -563,11 +714,15 @@
                 </a>
 
             </div>
+
         </nav>
+
 
         <main>
 
-            <!-- ABOUT -->
+            <!-- =========================================
+                 ABOUT
+            ========================================== -->
 
             <section id="about">
 
@@ -590,7 +745,9 @@
             </section>
 
 
-            <!-- PROJECTS -->
+            <!-- =========================================
+                 PROJECTS
+            ========================================== -->
 
             <section id="projects">
 
@@ -602,11 +759,13 @@
                     Some of the kinds of things I work on.
                 </p>
 
+
                 <div class="project-list">
 
                     <div class="project">
 
                         <div>
+
                             <div class="project-name">
                                 Web development
                             </div>
@@ -614,6 +773,7 @@
                             <div class="project-type">
                                 HTML / CSS / JavaScript
                             </div>
+
                         </div>
 
                         <div class="project-description">
@@ -627,6 +787,7 @@
                     <div class="project">
 
                         <div>
+
                             <div class="project-name">
                                 Software & tools
                             </div>
@@ -634,6 +795,7 @@
                             <div class="project-type">
                                 Development
                             </div>
+
                         </div>
 
                         <div class="project-description">
@@ -647,6 +809,7 @@
                     <div class="project">
 
                         <div>
+
                             <div class="project-name">
                                 Tech experiments
                             </div>
@@ -654,6 +817,7 @@
                             <div class="project-type">
                                 Various
                             </div>
+
                         </div>
 
                         <div class="project-description">
@@ -669,7 +833,9 @@
             </section>
 
 
-            <!-- QUEST -->
+            <!-- =========================================
+                 QUEST MODDING
+            ========================================== -->
 
             <section id="quest">
 
@@ -681,6 +847,7 @@
                     I'm interested in Meta Quest modding and the
                     Android side of standalone VR.
                 </p>
+
 
                 <div class="quest-items">
 
@@ -730,47 +897,107 @@
             </section>
 
 
-            <!-- DISCORD -->
+            <!-- =========================================
+                 SOCIALS / SIMPLE EMBEDS
+            ========================================== -->
 
             <section id="discord">
 
                 <h2 class="section-title">
-                    Discord
+                    Find me online
                 </h2>
 
                 <p class="section-text">
-                    I have a Discord community where I can share
-                    projects, talk about Quest modding, discuss
-                    technology, and hang out.
+                    My Discord community and TikTok are where I
+                    share things and hang out online.
                 </p>
 
-                <div class="social-links">
+
+                <div class="embed-grid">
+
+                    <!-- DISCORD -->
 
                     <a
-                        class="social-link"
+                        class="social-embed"
                         href="https://discord.gg/eYa3myAF7G"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        Join my Discord
+
+                        <div class="embed-icon">
+                            💬
+                        </div>
+
+                        <div class="embed-content">
+
+                            <div class="embed-label">
+                                DISCORD
+                            </div>
+
+                            <div class="embed-title">
+                                Jammantech
+                            </div>
+
+                            <div class="embed-description">
+                                Join my Discord community for
+                                Quest modding, technology,
+                                projects, and chatting.
+                            </div>
+
+                            <div class="embed-link">
+                                discord.gg/eYa3myAF7G
+                            </div>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- TIKTOK -->
+
+                    <a
+                        class="social-embed"
+                        href="https://www.tiktok.com/@jammantech"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+
+                        <div class="embed-icon">
+                            ♪
+                        </div>
+
+                        <div class="embed-content">
+
+                            <div class="embed-label">
+                                TIKTOK
+                            </div>
+
+                            <div class="embed-title">
+                                @jammantech
+                            </div>
+
+                            <div class="embed-description">
+                                Videos, tech stuff, VR,
+                                Quest modding, and whatever
+                                I'm working on.
+                            </div>
+
+                            <div class="embed-link">
+                                tiktok.com/@jammantech
+                            </div>
+
+                        </div>
+
                     </a>
 
                 </div>
 
-                <p
-                    style="
-                        margin-top: 18px;
-                        color: #666;
-                        font-family: monospace;
-                    "
-                >
-                    discord.gg/eYa3myAF7G
-                </p>
-
             </section>
 
 
-            <!-- INTERESTS -->
+            <!-- =========================================
+                 INTERESTS
+            ========================================== -->
 
             <section id="interests">
 
@@ -789,7 +1016,9 @@
         </main>
 
 
-        <!-- FOOTER -->
+        <!-- =========================================
+             FOOTER
+        ========================================== -->
 
         <footer>
 
@@ -830,18 +1059,26 @@
     </div>
 
 
-    <script>
-        /* -----------------------------
-           CREATE RAIN
-        ----------------------------- */
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
 
-        const weather = document.getElementById("weather");
+    <script>
+
+        /* =========================================
+           RAIN
+        ========================================== */
+
+        const weather =
+            document.getElementById("weather");
 
         for (let i = 0; i < 120; i++) {
 
-            const drop = document.createElement("div");
+            const drop =
+                document.createElement("div");
 
-            drop.className = "rain-drop";
+            drop.className =
+                "rain-drop";
 
             drop.style.left =
                 Math.random() * 110 + "vw";
@@ -862,15 +1099,17 @@
         }
 
 
-        /* -----------------------------
-           CREATE LEAVES
-        ----------------------------- */
+        /* =========================================
+           LEAVES
+        ========================================== */
 
         for (let i = 0; i < 12; i++) {
 
-            const leaf = document.createElement("div");
+            const leaf =
+                document.createElement("div");
 
-            leaf.className = "leaf";
+            leaf.className =
+                "leaf";
 
             leaf.style.left =
                 Math.random() * 100 + "vw";
@@ -881,13 +1120,16 @@
             leaf.style.animationDelay =
                 (-Math.random() * 15) + "s";
 
+            leaf.style.opacity =
+                0.15 + Math.random() * 0.3;
+
             weather.appendChild(leaf);
         }
 
 
-        /* -----------------------------
-           AUDIO
-        ----------------------------- */
+        /* =========================================
+           RAIN AUDIO
+        ========================================== */
 
         const audio =
             document.getElementById("rainAudio");
@@ -907,36 +1149,43 @@
 
                     audioEnabled = true;
 
-                    soundButton.textContent = "🔊";
+                    soundButton.textContent =
+                        "🔊";
 
                 })
                 .catch(() => {
 
-                    soundButton.textContent = "🔇";
-
+                    soundButton.textContent =
+                        "🔇";
                 });
         }
 
 
-        soundButton.addEventListener("click", () => {
+        soundButton.addEventListener(
+            "click",
+            () => {
 
-            if (audio.paused) {
+                if (audio.paused) {
 
-                startAudio();
+                    startAudio();
 
-            } else {
+                } else {
 
-                audio.pause();
+                    audio.pause();
 
-                audioEnabled = false;
+                    audioEnabled = false;
 
-                soundButton.textContent = "🔇";
+                    soundButton.textContent =
+                        "🔇";
+                }
+
             }
+        );
 
-        });
 
-
-        /* Start after first interaction */
+        /* =========================================
+           FIRST USER INTERACTION
+        ========================================== */
 
         function firstInteraction() {
 
@@ -975,7 +1224,9 @@
             "touchstart",
             firstInteraction
         );
+
     </script>
 
 </body>
 </html>
+```
