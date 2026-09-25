@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jammantech Meta Quest rooting tutorial for Quest 1, 2, 3, and 3S.">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Meta Quest Root Tutorial · Jammantech</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23111111%27/%3E%3Cpath d=%27M18 15v24c0 8 4 12 12 12 9 0 14-5 14-15V15h-8v21c0 6-2 8-6 8-3 0-4-2-4-6V15z%27 fill=%27%238ca37d%27/%3E%3C/svg%3E">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --bg: #0b0b0b;
+      --panel: rgba(16,16,16,.78);
+      --panel-strong: #111;
+      --border: #272727;
+      --border-hover: #3b3b3b;
+      --text: #e8e8e8;
+      --muted: #999;
+      --faint: #656565;
+      --green: #8ca37d;
+      --red: #c87f7f;
+      --yellow: #c3ab74;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    a { color: inherit; }
+
+    /* =========================================
+       RAIN + LEAVES
+    ========================================= */
+
+    #weather {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #weather::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(95,112,84,.07), transparent 43%),
+        linear-gradient(to bottom, rgba(15,18,14,.08), rgba(0,0,0,.23));
+    }
+
+    #weather::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.32);
+    }
+
+    .rain-drop {
+      position: absolute;
+      top: -100px;
+      width: 1px;
+      height: 55px;
+      background: rgba(210,220,225,.22);
+      transform: rotate(10deg);
+      animation: rain linear infinite;
+    }
+
+    @keyframes rain {
+      from { transform: translate3d(0,-100px,0) rotate(10deg); }
+      to   { transform: translate3d(-80px,110vh,0) rotate(10deg); }
+    }
+
+    .leaf {
+      position: absolute;
+      top: -40px;
+      width: 11px;
+      height: 7px;
+      background: #59604e;
+      border-radius: 80% 0 80% 0;
+      opacity: .3;
+      animation: leaf linear infinite;
+    }
+
+    @keyframes leaf {
+      0%   { transform: translate(0,-60px) rotate(20deg); }
+      25%  { transform: translate(70px,25vh) rotate(110deg); }
+      50%  { transform: translate(-50px,50vh) rotate(200deg); }
+      75%  { transform: translate(90px,75vh) rotate(290deg); }
+      100% { transform: translate(-30px,110vh) rotate(360deg); }
+    }
+
+    /* =========================================
+       PAGE
+    ========================================= */
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 17px 22px;
+      pointer-events: none;
+      background: linear-gradient(to bottom, rgba(11,11,11,.96), rgba(11,11,11,.63), transparent);
+    }
+
+    .brand,
+    .top-links {
+      pointer-events: auto;
+    }
+
+    .brand {
+      color: #ddd;
+      font-size: 14px;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .top-links {
+      display: flex;
+      gap: 16px;
+      color: #727272;
+      font-size: 13px;
+    }
+
+    .top-links a {
+      text-decoration: none;
+      transition: color .15s ease;
+    }
+
+    .top-links a:hover {
+      color: #ddd;
+    }
+
+    .shell {
+      width: min(770px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 112px 0 100px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 26px;
+      color: #717171;
+      font-size: 12px;
+      text-decoration: none;
+      transition: color .15s ease;
+    }
+
+    .back-link:hover {
+      color: #ccc;
+    }
+
+    .title {
+      margin: 0;
+      color: #eee;
+      font-size: clamp(30px,5vw,43px);
+      line-height: 1.18;
+      font-weight: 700;
+      letter-spacing: -1.45px;
+    }
+
+    .subtitle {
+      margin: 13px 0 0;
+      max-width: 670px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .support-meta {
+      margin-top: 12px;
+      color: #5e5e5e;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+    }
+
+    /* =========================================
+       QUICK LINKS
+    ========================================= */
+
+    .quick-links {
+      display: grid;
+      gap: 10px;
+      margin: 34px 0 26px;
+    }
+
+    .quick-link {
+      display: block;
+      padding: 15px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(15,15,15,.68);
+      text-decoration: none;
+      backdrop-filter: blur(7px);
+      transition: background .15s ease, border-color .15s ease, transform .15s ease;
+    }
+
+    .quick-link:hover {
+      background: rgba(21,21,21,.89);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    .quick-label {
+      display: block;
+      margin-bottom: 3px;
+      color: #cfcfcf;
+      font-size: 12px;
+      font-weight: 720;
+    }
+
+    .quick-url {
+      color: #829677;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    /* =========================================
+       CONTENT
+    ========================================= */
+
+    .section {
+      margin-top: 38px;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      color: #e2e2e2;
+      font-size: 21px;
+      line-height: 1.3;
+      letter-spacing: -.45px;
+    }
+
+    .warning {
+      margin: 26px 0 8px;
+      padding: 16px 17px;
+      border: 1px solid #453a27;
+      border-radius: 10px;
+      background: rgba(50,40,19,.26);
+      color: #bcae8d;
+      backdrop-filter: blur(7px);
+    }
+
+    .warning-title {
+      margin: 0 0 8px;
+      color: #d4bf8b;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .4px;
+    }
+
+    .warning p {
+      margin: 8px 0;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .card {
+      padding: 17px 18px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: rgba(15,15,15,.68);
+      backdrop-filter: blur(7px);
+    }
+
+    .card p {
+      margin: 0 0 12px;
+      color: #929292;
+      font-size: 14px;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    ul,
+    ol {
+      margin: 0;
+      padding-left: 24px;
+      color: #969696;
+      font-size: 14px;
+    }
+
+    li {
+      margin: 8px 0;
+      padding-left: 3px;
+    }
+
+    li strong,
+    p strong,
+    .warning strong {
+      color: #d2d2d2;
+    }
+
+    code {
+      padding: 2px 5px;
+      border: 1px solid #2c2c2c;
+      border-radius: 5px;
+      background: #131313;
+      color: #c8c8c8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .9em;
+    }
+
+    .version-box {
+      margin-top: 15px;
+      padding: 11px 13px;
+      border: 1px solid #2c3329;
+      border-radius: 8px;
+      background: rgba(140,163,125,.06);
+      color: #8fa185;
+      font-size: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .note {
+      margin-top: 13px;
+      padding: 12px 14px;
+      border-left: 2px solid #343b31;
+      background: rgba(15,15,15,.36);
+      color: #858585;
+      font-size: 13px;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 40px 0 27px;
+      background: linear-gradient(to right, transparent, #242424 12%, #242424 88%, transparent);
+    }
+
+    .footer {
+      color: #505050;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    #soundButton {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 30;
+      width: 40px;
+      height: 40px;
+      border: 1px solid #2c2c2c;
+      border-radius: 10px;
+      background: rgba(17,17,17,.92);
+      color: #aaa;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
+    #soundButton:hover {
+      background: #1a1a1a;
+    }
+
+    @media (max-width: 650px) {
+      .topbar { padding: 15px 17px; }
+      .top-links { gap: 11px; }
+
+      .shell {
+        width: min(100% - 30px,770px);
+        padding-top: 94px;
+      }
+
+      .title {
+        font-size: 31px;
+      }
+
+      .subtitle {
+        font-size: 15px;
+      }
+
+      #soundButton {
+        right: 14px;
+        bottom: 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      .rain-drop,
+      .leaf {
+        display: none;
+        animation: none;
+      }
+
+      .quick-link,
+      .top-links a,
+      .back-link,
+      #soundButton {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="weather" aria-hidden="true"></div>
+
+  <div class="page">
+    <div class="topbar">
+      <a class="brand" href="index.html">Jammantech</a>
+
+      <div class="top-links">
+        <a href="https://discord.gg/eYa3myAF7G" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://www.tiktok.com/@jammantech" target="_blank" rel="noopener noreferrer">TikTok</a>
+      </div>
+    </div>
+
+    <main class="shell">
+      <a class="back-link" href="index.html">← Back home</a>
+
+      <h1 class="title">Rooting the Meta Quest 1, 2, 3, and 3S</h1>
+
+      <p class="subtitle">
+        A simple guide for using Singularity to get temporary root access on supported
+        Meta Quest system versions.
+      </p>
+
+      <div class="support-meta">
+        Supported versions: v2.1-v2.7 · Updated September 22, 2026
+      </div>
+
+      <div class="quick-links">
+        <a
+          class="quick-link"
+          href="https://github.com/Lumince/singularity/releases"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="quick-label">Singularity:</span>
+          <span class="quick-url">https://github.com/Lumince/singularity/releases</span>
+        </a>
+
+        <a
+          class="quick-link"
+          href="https://discord.gg/ABCXxDyqrH"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="quick-label">FreeXR Discord:</span>
+          <span class="quick-url">https://discord.gg/ABCXxDyqrH</span>
+        </a>
+      </div>
+
+      <div class="warning">
+        <div class="warning-title">⚠️ IMPORTANT WARNING</div>
+
+        <p>
+          Do <strong>not</strong> continue if your headset is running a system version
+          outside <strong>v2.1-v2.7</strong>. The app will just say it is unsupported.
+        </p>
+
+        <p>
+          The <strong>Quest 3S XBOX Edition is currently having issues</strong> with this
+          root method, so it may fail more often or not work correctly on some Quest 3S headsets.
+        </p>
+
+        <p>
+          Check the <strong>FreeXR Discord</strong> for the latest compatibility information
+          and fixes before attempting it on a Quest 3S.
+        </p>
+      </div>
+
+      <section class="section">
+        <h2 class="section-title">Requirements</h2>
+
+        <div class="card">
+          <ul>
+            <li>A Meta Quest 1, Quest 2, Quest 3, or Quest 3S</li>
+            <li>Your headset must be running <strong>system version v2.1-v2.7</strong></li>
+            <li>Developer Mode and ADB access must be enabled</li>
+            <li>
+              Automatic updates should be disabled so your headset does not update to an
+              unsupported version
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">Instructions</h2>
+
+        <div class="card">
+          <ol>
+            <li>
+              Open the Singularity GitHub release page linked at the top of this page.
+            </li>
+
+            <li>
+              Download the APK from the release files.
+            </li>
+
+            <li>
+              Install or sideload the APK onto your Quest headset.
+            </li>
+
+            <li>
+              Open the app and carefully follow the instructions shown on-screen.
+            </li>
+
+            <li>
+              The process may fail several times before working. Restart the app and try
+              again when necessary.
+            </li>
+          </ol>
+
+          <div class="note">
+            It took me around <strong>eight attempts</strong> before it successfully worked.
+          </div>
+
+          <div class="version-box">
+            VERSION SUPPORTED: Most versions between v2.1 and v2.7
+            (as of September 22, 2026).
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">Downloads and Support</h2>
+
+        <div class="card">
+          <p>
+            <strong>Singularity LATEST:</strong><br>
+            <a
+              href="https://github.com/Lumince/singularity/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="color:#8ca37d;text-decoration:none;"
+            >https://github.com/Lumince/singularity/releases</a>
+          </p>
+
+          <p>
+            <strong>FreeXR Discord (For any issues):</strong><br>
+            <a
+              href="https://discord.gg/ABCXxDyqrH"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="color:#8ca37d;text-decoration:none;"
+            >https://discord.gg/ABCXxDyqrH</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">Important Root Information</h2>
+
+        <div class="card">
+          <p>
+            <strong>P.S:</strong> This is only <strong>temporary root</strong>.
+          </p>
+
+          <p>
+            You can enable <strong>root on boot</strong>, though, which makes it feel almost
+            seamless because root can automatically come back after restarting the headset.
+          </p>
+
+          <p>
+            The other Quest root methods currently available are also temporary, so there
+            is <strong>not currently a better permanent-root option</strong>.
+          </p>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <div class="footer">
+        Jammantech · Meta Quest Root Tutorial
+      </div>
+    </main>
+
+    <button
+      id="soundButton"
+      type="button"
+      aria-label="Toggle rain ambience"
+      title="Toggle rain ambience"
+    >🔇</button>
+  </div>
+
+  <script>
+    const weather = document.getElementById("weather");
+    const soundButton = document.getElementById("soundButton");
+
+    for (let i = 0; i < 46; i++) {
+      const drop = document.createElement("span");
+      drop.className = "rain-drop";
+      drop.style.left = Math.random() * 110 + "%";
+      drop.style.animationDuration = (0.7 + Math.random() * 0.7) + "s";
+      drop.style.animationDelay = (-Math.random() * 2) + "s";
+      drop.style.opacity = (0.08 + Math.random() * 0.22).toFixed(2);
+      drop.style.height = (30 + Math.random() * 55) + "px";
+      weather.appendChild(drop);
+    }
+
+    for (let i = 0; i < 8; i++) {
+      const leaf = document.createElement("span");
+      leaf.className = "leaf";
+      leaf.style.left = Math.random() * 100 + "%";
+      leaf.style.animationDuration = (8 + Math.random() * 8) + "s";
+      leaf.style.animationDelay = (-Math.random() * 12) + "s";
+      weather.appendChild(leaf);
+    }
+
+    let audioContext = null;
+    let rainSource = null;
+    let soundOn = false;
+
+    function startRainSound() {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+
+      audioContext = audioContext || new AudioCtx();
+
+      const bufferSize = audioContext.sampleRate * 2;
+      const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+      const data = buffer.getChannelData(0);
+
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * 0.35;
+      }
+
+      rainSource = audioContext.createBufferSource();
+      rainSource.buffer = buffer;
+      rainSource.loop = true;
+
+      const filter = audioContext.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 1100;
+
+      const gain = audioContext.createGain();
+      gain.gain.value = 0.045;
+
+      rainSource.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioContext.destination);
+      rainSource.start();
+    }
+
+    function stopRainSound() {
+      if (rainSource) {
+        try { rainSource.stop(); } catch {}
+        rainSource.disconnect();
+        rainSource = null;
+      }
+    }
+
+    soundButton.addEventListener("click", async () => {
+      soundOn = !soundOn;
+
+      if (soundOn) {
+        if (audioContext?.state === "suspended") {
+          await audioContext.resume();
+        }
+
+        startRainSound();
+        soundButton.textContent = "🔊";
+        soundButton.setAttribute("aria-label", "Mute rain ambience");
+      } else {
+        stopRainSound();
+        soundButton.textContent = "🔇";
+        soundButton.setAttribute("aria-label", "Play rain ambience");
+      }
+    });
+  </script>
+</body>
+</html>
