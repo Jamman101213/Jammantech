@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jammantech — projects, technology, and Meta Quest modding.">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Jammantech</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23111111%27/%3E%3Cpath d=%27M18 15v24c0 8 4 12 12 12 9 0 14-5 14-15V15h-8v21c0 6-2 8-6 8-3 0-4-2-4-6V15z%27 fill=%27%238ca37d%27/%3E%3C/svg%3E">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --bg: #0b0b0b;
+      --panel: rgba(16,16,16,.78);
+      --panel-strong: #111;
+      --border: #272727;
+      --border-hover: #3b3b3b;
+      --text: #e8e8e8;
+      --muted: #999;
+      --faint: #656565;
+      --green: #8ca37d;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    a { color: inherit; }
+
+    /* =========================================
+       RAIN + LEAVES
+    ========================================= */
+
+    #weather {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #weather::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(95,112,84,.07), transparent 43%),
+        linear-gradient(to bottom, rgba(15,18,14,.08), rgba(0,0,0,.23));
+    }
+
+    #weather::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.32);
+    }
+
+    .rain-drop {
+      position: absolute;
+      top: -100px;
+      width: 1px;
+      height: 55px;
+      background: rgba(210,220,225,.22);
+      transform: rotate(10deg);
+      animation: rain linear infinite;
+    }
+
+    @keyframes rain {
+      from { transform: translate3d(0,-100px,0) rotate(10deg); }
+      to   { transform: translate3d(-80px,110vh,0) rotate(10deg); }
+    }
+
+    .leaf {
+      position: absolute;
+      top: -40px;
+      width: 11px;
+      height: 7px;
+      background: #59604e;
+      border-radius: 80% 0 80% 0;
+      opacity: .3;
+      animation: leaf linear infinite;
+    }
+
+    @keyframes leaf {
+      0%   { transform: translate(0,-60px) rotate(20deg); }
+      25%  { transform: translate(70px,25vh) rotate(110deg); }
+      50%  { transform: translate(-50px,50vh) rotate(200deg); }
+      75%  { transform: translate(90px,75vh) rotate(290deg); }
+      100% { transform: translate(-30px,110vh) rotate(360deg); }
+    }
+
+    /* =========================================
+       PAGE
+    ========================================= */
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 17px 22px;
+      pointer-events: none;
+      background: linear-gradient(to bottom, rgba(11,11,11,.94), rgba(11,11,11,.57), transparent);
+    }
+
+    .brand,
+    .top-links {
+      pointer-events: auto;
+    }
+
+    .brand {
+      color: #ddd;
+      font-size: 14px;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .top-links {
+      display: flex;
+      gap: 16px;
+      color: #727272;
+      font-size: 13px;
+    }
+
+    .top-links a {
+      text-decoration: none;
+      transition: color .15s ease;
+    }
+
+    .top-links a:hover {
+      color: #ddd;
+    }
+
+    .shell {
+      width: min(770px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 135px 0 80px;
+    }
+
+    .intro {
+      min-height: calc(100vh - 215px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .greeting {
+      margin: 0 0 18px;
+      color: #eee;
+      font-size: clamp(29px,4.5vw,40px);
+      line-height: 1.22;
+      font-weight: 690;
+      letter-spacing: -1.2px;
+    }
+
+    .message {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(16px,2vw,19px);
+      letter-spacing: -.12px;
+      max-width: 650px;
+    }
+
+    .section-kicker {
+      margin: 34px 0 12px;
+      color: #626262;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.45px;
+      text-transform: uppercase;
+    }
+
+    /* =========================================
+       OPTIONS
+    ========================================= */
+
+    .options {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .option {
+      display: block;
+      padding: 18px 18px 17px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: rgba(15,15,15,.68);
+      text-decoration: none;
+      backdrop-filter: blur(7px);
+      transition:
+        background .15s ease,
+        border-color .15s ease,
+        transform .15s ease;
+    }
+
+    .option:hover {
+      background: rgba(21,21,21,.89);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    .option-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .option-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-icon {
+      width: 30px;
+      height: 30px;
+      flex: 0 0 30px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #2d332a;
+      border-radius: 8px;
+      background: rgba(140,163,125,.07);
+      color: var(--green);
+    }
+
+    .option-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .option-name {
+      color: #e1e1e1;
+      font-size: 16px;
+      font-weight: 720;
+    }
+
+    .arrow {
+      color: #555;
+      font-size: 16px;
+      transition: color .15s ease, transform .15s ease;
+    }
+
+    .option:hover .arrow {
+      color: #aaa;
+      transform: translate(2px,-1px);
+    }
+
+    .option-description {
+      margin: 8px 0 0 40px;
+      color: #898989;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .option-meta {
+      margin: 10px 0 0 40px;
+      color: #5f5f5f;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 37px 0 28px;
+      background: linear-gradient(to right, transparent, #242424 12%, #242424 88%, transparent);
+    }
+
+    .small-note {
+      color: #5f5f5f;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .small-note a {
+      color: #7d8d75;
+      text-decoration: none;
+    }
+
+    .small-note a:hover {
+      color: #a9b6a1;
+    }
+
+    /* =========================================
+       SOUND BUTTON
+    ========================================= */
+
+    #soundButton {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 30;
+      width: 40px;
+      height: 40px;
+      border: 1px solid #2c2c2c;
+      border-radius: 10px;
+      background: rgba(17,17,17,.92);
+      color: #aaa;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
+    #soundButton:hover {
+      background: #1a1a1a;
+    }
+
+    @media (max-width: 650px) {
+      .topbar {
+        padding: 15px 17px;
+      }
+
+      .top-links {
+        gap: 11px;
+      }
+
+      .shell {
+        width: min(100% - 30px,770px);
+        padding-top: 100px;
+      }
+
+      .intro {
+        min-height: calc(100vh - 160px);
+      }
+
+      .greeting {
+        font-size: 29px;
+      }
+
+      .message {
+        font-size: 17px;
+      }
+
+      .option-description,
+      .option-meta {
+        margin-left: 0;
+      }
+
+      #soundButton {
+        right: 14px;
+        bottom: 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .rain-drop,
+      .leaf {
+        display: none;
+        animation: none;
+      }
+
+      .option,
+      .top-links a,
+      #soundButton {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="weather" aria-hidden="true"></div>
+
+  <div class="page">
+    <div class="topbar">
+      <a class="brand" href="./">Jammantech</a>
+
+      <div class="top-links">
+        <a href="https://github.com/Jamman101213" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://discord.gg/eYa3myAF7G" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://www.tiktok.com/@jammantech" target="_blank" rel="noopener noreferrer">TikTok</a>
+      </div>
+    </div>
+
+    <main class="shell">
+      <section class="intro">
+        <h1 class="greeting">Hey! I'm Jammantech.</h1>
+
+        <p class="message">
+          I work with technology, Android, VR, AI, software, and whatever project
+          I decide to mess with next.
+        </p>
+
+        <div class="section-kicker">Choose where to go</div>
+
+        <div class="options">
+          <a class="option" href="learn-more.html">
+            <div class="option-top">
+              <div class="option-title-wrap">
+                <span class="option-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="4"></circle>
+                    <path d="M5 20c.8-4 3.1-6 7-6s6.2 2 7 6"></path>
+                  </svg>
+                </span>
+
+                <span class="option-name">Learn more about me</span>
+              </div>
+
+              <span class="arrow">↗</span>
+            </div>
+
+            <div class="option-description">
+              My projects, tech interests, public work, and more about Jammantech.
+            </div>
+
+            <div class="option-meta">learn-more.html</div>
+          </a>
+
+          <a class="option" href="quest-modding.html">
+            <div class="option-top">
+              <div class="option-title-wrap">
+                <span class="option-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 9a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4l1 5a3 3 0 0 1-5 2.7L13.5 15h-3L9 16.7A3 3 0 0 1 4 14l1-5Z"></path>
+                    <path d="M8 10h3M9.5 8.5v3"></path>
+                    <circle cx="16.3" cy="9.7" r=".65"></circle>
+                    <circle cx="18" cy="11.4" r=".65"></circle>
+                  </svg>
+                </span>
+
+                <span class="option-name">Meta Quest root tutorial</span>
+              </div>
+
+              <span class="arrow">↗</span>
+            </div>
+
+            <div class="option-description">
+              Open my Meta Quest rooting and modding tutorial.
+            </div>
+
+            <div class="option-meta">quest-modding.html</div>
+          </a>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="small-note">
+          Jammantech · 2026
+        </div>
+      </section>
+    </main>
+
+    <button
+      id="soundButton"
+      type="button"
+      aria-label="Toggle rain ambience"
+      title="Toggle rain ambience"
+    >🔇</button>
+  </div>
+
+  <script>
+    const weather = document.getElementById("weather");
+    const soundButton = document.getElementById("soundButton");
+
+    // Rain
+    for (let i = 0; i < 46; i++) {
+      const drop = document.createElement("span");
+      drop.className = "rain-drop";
+      drop.style.left = Math.random() * 110 + "%";
+      drop.style.animationDuration = (0.7 + Math.random() * 0.7) + "s";
+      drop.style.animationDelay = (-Math.random() * 2) + "s";
+      drop.style.opacity = (0.08 + Math.random() * 0.22).toFixed(2);
+      drop.style.height = (30 + Math.random() * 55) + "px";
+      weather.appendChild(drop);
+    }
+
+    // Leaves
+    for (let i = 0; i < 8; i++) {
+      const leaf = document.createElement("span");
+      leaf.className = "leaf";
+      leaf.style.left = Math.random() * 100 + "%";
+      leaf.style.animationDuration = (8 + Math.random() * 8) + "s";
+      leaf.style.animationDelay = (-Math.random() * 12) + "s";
+      weather.appendChild(leaf);
+    }
+
+    // Lightweight generated rain ambience so no external audio file is required.
+    let audioContext = null;
+    let rainSource = null;
+    let rainGain = null;
+    let soundOn = false;
+
+    function startRainSound() {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+
+      audioContext = audioContext || new AudioCtx();
+
+      const bufferSize = audioContext.sampleRate * 2;
+      const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+      const data = buffer.getChannelData(0);
+
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * 0.35;
+      }
+
+      rainSource = audioContext.createBufferSource();
+      rainSource.buffer = buffer;
+      rainSource.loop = true;
+
+      const filter = audioContext.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 1100;
+
+      rainGain = audioContext.createGain();
+      rainGain.gain.value = 0.045;
+
+      rainSource.connect(filter);
+      filter.connect(rainGain);
+      rainGain.connect(audioContext.destination);
+      rainSource.start();
+    }
+
+    function stopRainSound() {
+      if (rainSource) {
+        try { rainSource.stop(); } catch {}
+        rainSource.disconnect();
+        rainSource = null;
+      }
+    }
+
+    soundButton.addEventListener("click", async () => {
+      soundOn = !soundOn;
+
+      if (soundOn) {
+        if (audioContext?.state === "suspended") {
+          await audioContext.resume();
+        }
+
+        startRainSound();
+        soundButton.textContent = "🔊";
+        soundButton.setAttribute("aria-label", "Mute rain ambience");
+      } else {
+        stopRainSound();
+        soundButton.textContent = "🔇";
+        soundButton.setAttribute("aria-label", "Play rain ambience");
+      }
+    });
+  </script>
+</body>
+</html>
